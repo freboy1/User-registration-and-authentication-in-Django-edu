@@ -3,16 +3,16 @@ from django.shortcuts import render
 
 # Create your views here.
 def homepage(request):
-    return HttpResponse('this is home page')
+    return render(request, 'crm/index.html')
 
 def register(request):
 
-    pass
+    return render(request, 'crm/register.html')
 
 def my_login(request):
 
-    pass
+    return render(request, 'crm/my-login.html')
 
 def dashboard(request):
 
-    pass
+    return render(request, 'crm/dashboard.html')

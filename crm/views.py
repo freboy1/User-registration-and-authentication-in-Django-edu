@@ -1,13 +1,34 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from .forms import CreateUserForm
 
 # Create your views here.
 def homepage(request):
     return render(request, 'crm/index.html')
 
+
+
+
 def register(request):
 
-    return render(request, 'crm/register.html')
+    form = CreateUserForm()
+
+    if request.method == 'POST':
+
+        form = CreateUserForm(request.POST)
+        
+        if form.is_valid():
+            
+            form.save()
+            
+            return redirect('my-login')
+
+    context = {'registerform': form}
+
+    return render(request, 'crm/register.html', context)
+
+
+
 
 def my_login(request):
 

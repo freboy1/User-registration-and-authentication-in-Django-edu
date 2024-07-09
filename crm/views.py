@@ -53,7 +53,9 @@ def my_login(request):
     return render(request, 'crm/my-login.html', context)
 
 
-
+def user_logout(request):
+    logout(request)
+    return redirect('')
 
 
 def dashboard(request):

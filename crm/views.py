@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from .forms import CreateUserForm, LoginForm
 from django.contrib.auth.models import auth
 from django.contrib.auth import login, logout, authenticate
-
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def homepage(request):
@@ -57,7 +57,7 @@ def user_logout(request):
     logout(request)
     return redirect('')
 
-
+@login_required(login_url='my-login')
 def dashboard(request):
 
     return render(request, 'crm/dashboard.html')

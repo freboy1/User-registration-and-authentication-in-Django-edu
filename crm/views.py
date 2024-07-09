@@ -1,6 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from .forms import CreateUserForm
+from .forms import CreateUserForm, LoginForm
+from django.contrib.auth.models import auth
+from django.contrib.auth import login, logout, authenticate
+
 
 # Create your views here.
 def homepage(request):
@@ -32,7 +35,26 @@ def register(request):
 
 def my_login(request):
 
-    return render(request, 'crm/my-login.html')
+    form = LoginForm()
+
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        
+        if form.is_valid():
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard')
+    context = {'loginform': form}
+    return render(request, 'crm/my-login.html', context)
+
+
+
+
 
 def dashboard(request):
 
